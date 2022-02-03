@@ -1,4 +1,6 @@
 package monprojet.entity;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 import org.hibernate.annotations.Proxy;
@@ -11,6 +13,7 @@ import lombok.*;
 @Getter @Setter @NoArgsConstructor @RequiredArgsConstructor @ToString
 @Proxy(lazy = false)
 @Entity // Une entité JPA
+
 public class Country {
     @Id  @GeneratedValue(strategy = GenerationType.IDENTITY) 
     private Integer id;
@@ -22,4 +25,10 @@ public class Country {
     @Column(unique=true)
     @NonNull
     private String name;
+   
+    @OneToMany(mappedBy="country")
+    @ToString.Exclude // Essayer sans "mappedBy" pour voir le schémma relationnel généré
+    // @OneToMany
+    private List<City> cities = new ArrayList<>();
 }
+
